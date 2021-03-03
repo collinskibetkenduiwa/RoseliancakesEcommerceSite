@@ -1,0 +1,130 @@
+{% extends "oscar/layout_2_col.html" %}
+{% load static %}
+{% load basket_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load i18n %}
+
+{% block title %}
+    {% if summary %}{{ summary }} |{% endif %} {{ block.super }}
+{% endblock %}
+{% block headertext %}
+<p><b>𝓐𝓵𝓵 𝓬𝓪𝓴𝓮𝓼 🥮</b></p>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{{ summary }}</li>
+    </ul>
+{% endblock breadcrumbs %}
+{% block column_left %}
+    {% if has_facets %}
+        <h4>{% trans "Refine by" %}</h4>
+        <div class="side_categories">
+            {% for field, data in facet_data.items %}
+                {% if data.results %}
+                    {% include 'oscar/search/partials/facet.html' with name=data.name items=data.results %}
+                {% endif %}
+            {% endfor %}
+        </div>
+{% endif %}
+{% endblock %}
+{% block content %}
+    <form method="get" class="form-horizontal">
+        {# Render other search params as hidden inputs #}
+        {% for value in selected_facets %}
+            <input type="hidden" name="selected_facets" value="{{ value }}" />
+        {% endfor %}
+        <input type="hidden" name="q" value="{{ search_form.q.value|default_if_none:"" }}" />
+
+        {% if paginator.count %}
+            {% if paginator.num_pages > 1 %}
+                {% blocktrans with start=page_obj.start_index end=page_obj.end_index count num_results=paginator.count %}
+                    <strong>{{ num_results }}</strong> result - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
+                {% plural %}
+                    <strong>{{ num_results }}</strong> results - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
+                {% endblocktrans %}
+            {% else %}
+                {% blocktrans count num_results=paginator.count %}
+                    <strong>{{ num_results }}</strong> result.
+                {% plural %}
+                    <strong>{{ num_results }}</strong> results.
+                {% endblocktrans %}
+            {% endif %}
+            {% if form %}
+                <div class="pull-right">
+                    {% include "oscar/partials/form_field.html" with field=form.sort_by %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>
+                {% trans "<strong>0</strong> results." %}
+            </p>
+        {% endif %}
+    </form>
+    {% if products %}
+    </div>{% comment %} added this to close styling on category row to allow products to spread on te whole page  {% endcomment %}
+    <section> 
+    <!--json-ld-product carousel-->
+      <script type="application/ld+json">
+    {% for product in products %}
+
+    {
+      "@context":"https://schema.org",
+      "@type":"ItemList",
+      "itemListElement":[
+        {
+          "@type":"ListItem",
+          "position":1,
+          "url":"www.roseliancakes.co.ke{{ product.get_absolute_url }}"
+        },
+      ]
+    }
+    {%endfor %}
+    </script>
+    {% include "whatsapp.html"%}
+            {% if request.user_agent.is_mobile %}
+                <ul  class="row">
+                    {% for product in products %}
+                        <li class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                        {% render_product product %}
+                        </li>
+                        {% if forloop.counter|divisibleby:2%}
+                </ul>
+                <ul class="row">
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                 {% for product in products %}
+                        <li class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        {% render_product product %}
+                        </li>
+                        {% if forloop.counter|divisibleby:4%}
+                </ul>
+                <ul class="row">
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            <div class="row">
+                {% include "oscar/catalogue/partials/benefits.html"%}
+            </div>    
+            {% include "oscar/catalogue/partials/add_to_basket_modal.html"%}
+            {% endif %}
+            {% include "oscar/partials/pagination.html" %}
+
+    </section>
+    {% else %}
+        <p class="nonefound">{% trans "Currently no cakes found." %}</p>
+    {% endif %}
+
+{% endblock content %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    oscar.search.init();
+{% endblock %}

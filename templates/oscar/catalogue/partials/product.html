@@ -1,0 +1,51 @@
+{% load display_tags %}
+{% load i18n %}
+{% load image_tags %}
+{% load reviews_tags %}
+{% block product %}
+{% load currency_filters %}
+{% load purchase_info_tags %}
+    <article class="product_pod">
+        {% block product_image %}
+            <div class="image_container">
+			{% if request.user_agent.is_mobile %}
+                {% with image=product.primary_image %}
+                    {% oscar_thumbnail image.original "x100" upscale=False as thumb %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" width='150px' height='160px' class="thumbnail">
+                    </a>
+                {% endwith %}
+            {% else %}
+				<div class="pi-pic">
+                {% with image=product.primary_image %}
+                    {% oscar_thumbnail image.original "x355" upscale=False as thumb %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="thumbnail">
+                        <div class="bottom-right">
+							<a href="#"
+                             class="add-card"
+                             data-toggle="modal"
+                             data-target="#product_view"
+                             data-name="{{product.get_title}}"
+                             data-description="{{ product.description|safe }}"
+                             data-img="{{thumb.url}}">
+                              <i class="flaticon-visible"></i><span>Quick view</span></a>
+                        </div>
+                    </a>
+                {% endwith %}
+                </div>
+			{% endif %}	
+            </div>
+        {% endblock %}
+        {% block product_title %}
+           <h3><a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}"  style="color:purple;word-wrap:break-word;" >{{ product.get_title|truncatewords:4 }}</a></h3>
+                {% include "oscar/catalogue/partials/stock_record.html" %}
+			    {% if request.user_agent.is_mobile %}
+                {% else %}
+                {% if not product.is_parent and not product.has_options %}
+                    {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+                {% endif %}
+                {% endif %}
+        {% endblock %}
+    </article>
+{% endblock %}

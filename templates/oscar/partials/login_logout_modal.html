@@ -1,0 +1,56 @@
+{% load i18n %}
+{% load static %}
+<div class="modal fade " id="login-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-login mt-5" role="document">
+        <div class="modal-content">
+            <div class="card card-signup card-plain">
+                <div class="modal-header">
+                    <div class="card-header card-header-primary text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                        <h4 class="card-title">Log in</h4>
+                        <div class="social-line">
+                          <a href="" class="btn btn-just-icon btn-link">
+                            <i class="fa fa-facebook-square"></i>
+                          </a>
+                          <a href="" class="btn btn-just-icon btn-link">
+                            <i class="fa fa-twitter"></i>
+                          </a>
+                          <a href="" class="btn btn-just-icon btn-link">
+                            <i class="fa fa-google-plus"></i>
+                          </a>
+                        </div>
+                    </div>
+                    <p class=" text-center">Or use email address</p>
+
+                </div>
+                <div class="modal-body">
+                    <form id="login_form" class="form" method="post" action="/accounts/login/">
+                        {% csrf_token %}
+                        <div >
+                            <input style='width:300px;' type="email" name='login-username' class="form-control" placeholder="Email..." required=''>                     
+                            <input  style='width:300px;margin-top:15px;' length=43 name='login-password'type="password" placeholder="Password..." class="form-control" required=''>
+                            <input type="hidden" name="login-redirect_url" id="id_login-redirect_url">
+                            <hr/>
+                            <input type='submit' style="margin-left:50px;"name="login_submit" type="submit"  class='btn  btn-primary btn-block btn-rounded' value='LogIn'>
+                        </div> 
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a  href="{% url 'password-reset' %}" style="color:red;"><b>Forgot password ?</b></a>
+                    <a href="/accounts/register/" class="btn btn-primary btn-link btn-wd btn-lg">Or register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('body').bootstrapMaterialDesign();
+    document.getElementById("btnLogin").click();
+    setTimeout(function() {
+        document.getElementById("btnLogin").click();
+    }, 2000);
+
+});
+</script>
+

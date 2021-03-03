@@ -1,0 +1,29 @@
+{% load static %}
+<div class="modal fade product_view" id="add-to-basket-message">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="/home" class="navbar-brand">
+                    <img src="{%static 'core/logo.png'%}" height="60" width='60'alt="Roselian"><div class="col-sm-7 h1"><a href="{{ homepage_url }}">{% block brand_title %}</a><small style='color:black;'><br> {{ shop_tagline }}</small>{% endblock %}</div>
+                </a>
+            </div>
+            <div class="modal-body">
+               <p><img  id="cake-image" src="" height="45" width="45"></a>   <strong id="cake-name"></strong> has been added to cart</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+
+
+  $('.btn.btn-sm.btn-primary.btn-add-to-basket').click(function() {
+    $('#cake-image').attr('src',  $(this).data('img'));
+    $('#cake-name').html($(this).data('name'));
+ 
+  });
+
+
+});
+</script>

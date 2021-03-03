@@ -1,0 +1,102 @@
+.pl-200 {
+    padding-left: 30px;
+}
+
+.pr-200 {
+    padding-right: 30px;
+}
+.categories-menu {
+    width: 30%;
+}
+
+.menu-slider-wrapper {
+    width: 70%;
+}
+.category-heading > h3 {
+    font-size: 14px;
+    padding: 16px 15px 15px;
+}
+
+.slider-content-style-3 {
+    margin-left: 35px;
+}
+
+.slider-content-style-3 h2 {
+    font-size: 44px;
+    line-height: 60px;
+}
+.electronic-banner-area {
+    padding: 0 30px;
+}
+.notification-section-padding .container-fluid {
+    padding: 0 30px;
+}
+.notification-pera-graph {
+    width: 55%;
+}
+.pl-200 {
+    padding-left: 15px;
+}
+
+.pr-200 {
+    padding-right: 15px;
+}
+.categories-menu {
+    width: 100%;
+}
+
+.menu-slider-wrapper {
+    margin-top: 50px;
+    padding-left: 0;
+    width: 100%;
+}
+
+.slider-content-style-3 {
+    margin-left: 15px;
+}
+
+.slider-content-style-3 h2 {
+    font-size: 32px;
+    line-height: 40px;
+}
+
+.pb-173 {
+    padding-bottom: 80px;
+}
+
+.pt-170 {
+    padding-top: 75px;
+}
+
+.electronic-banner-area {
+    padding: 0 15px;
+}
+.section-title-4 > h2 {
+    font-size: 24px;
+}
+
+.section-title-4 > h2::after {
+    right: -50px;
+    width: 35px;
+}
+
+.section-title-4 > h2::before {
+    left: -50px;
+    width: 35px;
+}
+.notification-section-padding .container-fluid {
+    padding: 0 15px;
+}
+
+.notification-icon.notification-icon-2 > button {
+    margin: 9px 0 5px 15px;
+}
+
+.notification-btn-close {
+    margin-top: 10px;
+}
+
+.notification-wrapper {
+    display: block;
+}
+/*  */

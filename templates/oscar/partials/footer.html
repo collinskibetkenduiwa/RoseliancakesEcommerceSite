@@ -1,0 +1,101 @@
+{% load i18n %}
+{% load static %}
+{% load base_tags %}
+
+<p></p>
+<footer class="footer" id="footer">
+    {% block footer %}
+    {% if request.user_agent.is_mobile %} 
+    {% footer as page_footer %}
+    {% for objects in page_footer %}
+    <div style="margin-left:20px;margin-right:10px;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <style>
+                .{
+                    display:flex;
+                    align-self:centre;
+                }
+                </style>
+                <div class="logo-container">
+                    <h1 style="color: #e41d1d;margin-top:-15px;">Roselian cakes<img src="{%static 'core/logo.png'%}" height=100px width="100px"/></h1>
+                    <h6 style="color:white;margin-top:-55px;">&nbsp;&nbsp;&nbsp; Indulge at your convinience</h6>
+                <div> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 ">>
+                <p class="mb10" style="margin-left:25px;">{{objects.Content|safe}}</p>
+                <p><i class="fa fa-phone"></i>&nbsp;{{objects.Phone}}</p>
+                <p><i class="fa fa fa-envelope"></i>&nbsp;{{objects.Email}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6">
+                <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+                {% if user.is_staff or perms.partner.dashboard_access %}
+                <li><a href="/helpdesk">Helpdesk</a></li>
+                {% endif %}
+                {{objects.Quick_Links|safe}}
+                </ul>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <h5 class="headin5_amrc col_white_amrc pt2">Legal</h5>
+                <!--headin5_amrc-->
+                <ul class="footer_ul_amrc">
+                {{objects.Legal|safe}} 
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% include "oscar/partials/footer_owl_slider.html"%}
+    <div class="row">
+        <div class=" col-sm-4 col-md col-sm-4  col-12 col">
+            <h5 class="headin5_amrc col_white_amrc pt2"><img src="{%static 'core/logo.png'%}" height=100px width="100px"></h5>
+            <!--headin5_amrc-->
+        {% footer as page_footer %}
+        {% for objects in page_footer %}
+            <p class="mb10">{{objects.Content|safe}}</p>
+            <p><i class="fa fa-phone"></i>&nbsp;{{objects.Phone}}</p>
+            <p><i class="fa fa fa-envelope"></i>&nbsp;{{objects.Email}}</p>
+        </div>
+        <div class=" col-sm-4 col-md  col-6 col footer-newsletter">
+            <h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+            <!--headin5_amrc-->
+            <ul class="footer_ul_amrc">
+            {% if user.is_staff or perms.partner.dashboard_access %}
+            <li><a href="/helpdesk">Helpdesk</a></li>
+            {% endif %}
+            {{objects.Quick_Links|safe}}
+            </ul>
+            <p><strong><h4>Join Our Newsletter</h4></strong></p>
+            <form enctype="multipart/form-data" methord="post" action="/newsletter/SiteUser/subscribe/">
+              {% csrf_token %}
+              <input type="email" name="email_field" required><input type="submit" name='submit' value="Subscribe">
+            </form>
+        <!--footer_ul_amrc ends here-->
+        </div>
+        <div class=" col-sm-4 col-md  col-6 col ">
+            <h5 class="headin5_amrc col_white_amrc pt2">Legal</h5>
+            <!--headin5_amrc-->
+            <ul class="footer_ul_amrc">
+             {{objects.Legal|safe}} 
+            </ul>
+            <h5 class="headin5_amrc col_white_amrc pt2">Brands</h5>
+            <!--headin5_amrc-->
+            <ul class="footer_ul_amrc">
+            <li><a href="{{objects.Link_One}}"><img src="{{objects.Brand_One.url}}" height=35px; width=100px ></a></li><br>
+            <li><a href="{{objects.Link_Two}}"><img src="{{objects.Brand_Two.url}}"  height=35px; width=100px></a></a></li><br>
+            <li><a href="{{objects.Link_Three}}"><img src="{{objects.Brand_Three.url}}"  height=35px; width=100px></a></li>
+            </ul>
+            <!--footer_ul_amrc ends here-->
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% include 'oscar/partials/footer_social.html'%}
+    {% endblock %}
+</footer>
+

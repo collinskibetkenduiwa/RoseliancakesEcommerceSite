@@ -1,0 +1,44 @@
+{% load history_tags %}
+{% load basket_tags %}
+{% load currency_filters %}
+{% load image_tags %}
+{% load i18n %}
+
+
+<div class="cake-cart__content">
+    {% if request.basket.num_lines %}
+    <div class="cake-cart__items">
+    {% if request.basket.num_lines < 7 %}
+        {% for line in request.basket.all_lines %}
+        <div class="cake-product--mini-cart">
+            <div class="cake-product__thumbnail">
+            {% with image=line.product.primary_image %}
+                {% oscar_thumbnail image.original "80x60" upscale=True as thumb %}
+                <a href="{{ line.product.get_absolute_url }}"><img  src="{{ thumb.url }}" alt="{{ line.product.get_title }}"></a>
+            {% endwith %}
+                <h3  style="color:black;word-wrap:break-word;" >{{ line.product.get_title }}</h3>
+            </div>
+            <div class="cake-product__content">
+                <h5 style="color:black">Quantity:{{ line.quantity }}<small> Price per item:{{ line.unit_price_excl_tax|currency:request.basket.currency }}</small></h5>
+            </div>
+        </div>
+        {% endfor%}
+    {% endif %}    
+    </div>
+    <div class="cake-cart__footer">
+          {% if request.basket.is_tax_known %}
+      <h3> Total:<strong>{{ request.basket.total_incl_tax|currency:request.basket.currency }}</strong></h3>
+          {% else%}
+      <h3> Total:{{ request.basket.total_excl_tax|currency:request.basket.currency }}<strong></strong></h3>
+          {% endif%}
+      <figure>
+          <a href="{% url 'basket:summary' %}" class="btn btn-ghost-info btn-lg"><i class="flaticon-visible"></i>View</a>
+          <a href="{% url 'checkout:index' %}" class="btn btn-ghost-primary btn-lg pull-right"><i class="icon-shopping-cart"></i>Checkout</a>
+      </figure>
+    </div>
+    {% else %}
+    <div class="cake-cart__items">
+        <p style="color:black">Your cart is empty </p>
+    </div>   
+    {% endif %}
+</div>

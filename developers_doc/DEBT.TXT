@@ -1,0 +1,52 @@
+# ############################MOBILE##############################################
+Product Gallery.
+Category should not show a menu
+# 3##############################################################################
+Homepage
+custom template tags 
+Postgres
+Checkout
+Sandbox with initial fixture
+Contact 
+Send mail and message to user and partner
+reviews to be modal
+Download resources page
+Build your own cake page
+docker 
+Alphine images
+fix logo size in storage
+simple math captcha
+customize helpdesk,subscribe,django uwsgi,tellme,emails and user email sebscription
+Agents page
+POS
+Vat
+how to use site and dashboard help login protected page
+Auth2-social
+picture zoom
+filter
+Auto_backup
+Email and message offers
+share
+modals
+web push
+progressive web app
+User tracking
+Cache
+Admin user manager
+Mobile choose location
+Pillow image resize
+sitemaps and schema and seo
+##################
+invoices 
+complex offers
+oscar thumbnails
+sorl
+thumbnails
+prometheus
+tick
+Code tracking eg using sentry 
+Link check
+
+decouple
+split settings
+Fabric

@@ -1,0 +1,15 @@
+{% extends "simple_pages/base.html" %}
+
+
+{% block main %}
+    {% if page.content %}
+{% if request.user_agent.is_mobile %} 
+    <div  class="col-sm-12 col-md-12">
+{% else %}
+    <div style="margin-left:1%;margin-right:1%;ord-wrap:break-word;">
+{% endif %}    
+        {{ page.content|safe }}
+    </div>
+    </div>
+    {% endif %}
+{% endblock main %}

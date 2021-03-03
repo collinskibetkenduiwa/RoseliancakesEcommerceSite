@@ -1,0 +1,24 @@
+{% load static %}
+{% load static compress %}
+{% compress js %}
+<script src="{%static 'assets/js/plugins.js'%}"></script>
+<script src="{%static 'assets/js/main1.js'%}"></script>
+   <!-- Js Plugins -->
+<script src="{%static 'core/js/jquery.slicknav.js'%}"></script>
+<script src="{%static 'core/js/owl.carousel.min.js'%}"></script>
+<script src="{%static 'core/js/main.js'%}"></script>
+{% if request.user_agent.is_mobile %}
+ <!-- jquery plugins here-->
+    <!-- bootstrap js -->
+    <script src="{%static 'mobile/js/jquery.magnific-popup.js'%}"></script>
+    <!-- carousel js -->
+    <!-- slick js -->
+    <script src="{%static 'mobile/js/slick.min.js'%}"></script>
+    <script src="{%static 'mobile/js/jquery.counterup.min.js'%}"></script>
+    <script src="{%static 'mobile/js/waypoints.min.js'%}"></script>
+    <script src="{%static 'mobile/js/jquery.ajaxchimp.min.js'%}"></script>
+    <!-- custom js -->
+    <script src="{%static 'mobile/js/custom.js'%}"></script>
+{% endif %}    
+{% endcompress %}
+<script src="{%static 'core/js/jquery.min.js'%}"></script>

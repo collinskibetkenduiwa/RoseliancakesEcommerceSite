@@ -1,0 +1,173 @@
+# This is a list of fetures that roselian cakes ecommerce system has
+Dashboard
+
+Shows your orders due in next 7 days and your pending and overdue payments.
+Shows your upcoming appointments
+Shows Payments due
+Add, modify, show any reminders set.
+# 
+Order Management
+
+Design cake through interface while sitting with customer
+Set order date and delivery date.
+Add delivery charge, and equipment rental.
+Apply sales tax.
+Give your customer a discount and add a discount reason to the invoice.
+Record deposits and schedule future payments.
+Record delivery notes for the invoice, or private notes that do not show on the invoice.
+See your actual costs and profit.
+Create a shopping list.
+Create and email PDF invoices.
+Attach your terms or contract to invoices. *
+# 
+Cake Builder
+
+Select base
+Select number of tiers
+Select size and shape of each tier
+Select layer flavors, fillings and icing for each tier
+Make detailed notes about each tier
+See your cost for the cake and what to charge for it based on a markup or on a price per serving basis.
+Upload inspiration photos
+Upload sketches
+Create a quote or an invoice based on this information
+# 
+Customer Organization
+
+Record all your customer’s contact information, including name, address, email and phone.
+Keep track of your customer’s complete order history.
+# 
+Recipes and Ingredients
+
+Comes with common baking ingredients and their U.S. prices. Use our prices or your own.*
+Global ingredients have built-in weight to volume converters. Never wonder how much a teaspoon of vanilla costs or a cup of flour costs.
+Available global recipes for popular recipes like white almond sour cream cake, Swiss meringue buttercream, American buttercream, and more.*
+Global ingredient updating – when you change an ingredient price, all your recipes automatically update.
+Cost out every recipe down to the penny. 
+# 
+Master Materials
+
+Comes pre-loaded with standard box and board sizes and their kenyan Prices.*
+Allows for retail mark-up of your materials.
+# 
+Calendar
+
+Displays your orders, quotes, and appointments
+Add custom appointments
+# 
+Reports
+
+All reports can be exported as Excel, PDF, or CSV.
+Upcoming appointments.
+Full customer list.
+Full master ingredient list.
+Full master material list.
+Pending and overdue payments.
+Sales tax.
+Shopping list for one order or many orders.
+Production report for any upcoming time period with order summaries for all orders.
+# 
+Email (Upgrade)
+
+When an appointment is made, an email is triggered to the client providing them with pertinent data about the appointment.
+The day before the appointment, a confirmation email is sent.
+When an order is made, a thank you email is sent and includes details of the order
+3 days before event, an email is sent reminding bride of payment due and security deposit due
+A week before the delivery, a confirmation email is sent asking for any changes that might need to be made
+Morning of event, a congratulations note is sent
+A text message is sent to notify bride that she has an email from the program
+Add new triggered emails, modify existing emails
+Reply to address is the address from My Account
+# 
+My Account Settings
+Guided by a wizard
+Enter your bakery information along with your logo
+Set up terms and conditions to be printed with invoice. Sample terms and conditions provided
+Set your sales tax rate and VAT, with an option to tax deliveries and rentals.
+# 
+Customer Service
+self help Service
+Report a bug
+servey
+Feedback with screen shorts
+Free support by email for life
+Support provided by a trouble ticket process
+
+# 
+Images
+
+picture zoom in product description on mouse hover
+all images to be jpeg next gen technology
+modal logIN align title centre
+
+# 
+Knowledge
+Forumn look like
+
+# 
+Security
+
+Auth2
+Otp
+Register password front end verification
+#
+others
+
+progressive web app
+Ckeditor in both admin and Dashboard
+
+# 
+Acceleration
+
+Solr
+Easy-rec
+redis
+Celery
+
+# 
+data and Acceleration
+
+Grafana
+Tick
+Nagios
+Admin history and actions
+
+# 
+Admin
+
+mobie admin
+charts
+docs
+
+#
+User
+
+user tracking
+
+#
+Agents
+
+Login with different acounts
+Verification
+Select location and storage unit
+
+#
+Marketting
+
+Facebook birth pages
+Drip Marketting
+Blog
+
+#
+View
+
+Toogle list and details
+Filter
+Compare
+Apply
+
+#
+others
+Wep push
+Progressive web app
+Forumn

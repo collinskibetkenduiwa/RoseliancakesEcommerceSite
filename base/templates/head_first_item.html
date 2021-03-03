@@ -1,0 +1,5 @@
+{% load base_tags %}
+{% head_first_item as header_first %}
+{% for objects in header_first %}
+{{objects.Content|safe}}
+{% endfor %}

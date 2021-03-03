@@ -1,0 +1,89 @@
+{% extends "oscar/base.html" %}``
+{% load static %}
+{% load basket_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load i18n %}
+{% load base_tags %}
+
+{% block styles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}" />
+{% endblock %}
+
+{% block layout %}
+    <header class="header container-fluid"> 
+        {% block navigation %}
+            {% include "oscar/partials/nav_primary.html" %}
+        {% endblock %}
+    </header>
+        <!-- Page info -->
+        <link rel="stylesheet" type="text/css" href="{% static 'contact/css/contact.css' %}" />
+        <!-- Page info end -->
+        <!-- Contact section -->
+                <hr/>
+        <section class="contact-section">
+            <div class="contact-container">
+                <div class="row">
+                    <div class="col-lg-6 contact-info">
+                        {% footer as page_footer %}
+                        {% for objects in page_footer %}
+                        <h1>Get in touch</h1>
+                        <p><i class="fa fa-phone"></i> &nbsp;{{objects.Phone}}</</p>
+                        <p><i class="fa fa-envelope"></i>&nbsp;{{objects.Email}}</</p>
+                        {% endfor %}
+                        <div class="contact-social">
+                        {% footer_social as page_footer_social %}
+		                {% for objects in page_footer_social%}
+                            <a href="{{objects.Facebook}}"><i class="fa fa-facebook"></i></a>
+                            <a href="{{objects.Twitter}}"><i class="fa fa-twitter"></i></a>
+                        {% endfor %}
+                        </div>
+                        {% if messages %}
+                                <div  class="alert alert-success alert-dismissible fade show">
+                                <ul class="messages" style="color:green">
+                                    {% for message in messages %}
+                                    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}><strong>{{ message }}</strong> </li>
+                                    {% endfor %}
+                                </ul>
+                                </div>
+                        {% endif %}
+                        <form method="POST" class="contact-form">
+                            {% csrf_token %}
+                            <input type="text"  name="name" placeholder="Your name" required="">
+                            <input type="email"  name="email" placeholder="Your e-mail" required="">
+                            <input type="text"  name="phone" placeholder="Your Phone number" required="">
+                            <input type="text"  name="subject" placeholder="Subject">
+                            <textarea  name="message" placeholder="Message" required=""></textarea>
+                            <button class="contact-btn">SEND NOW</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if  not request.user_agent.is_pc %}
+            {% else %}
+            <div class="contact-adv"><image height=99%  width=100% src="{% static 'contact/images/family_cake.jpg' %}" style="border:0" allowfullscreen /></div>
+            {% endif %}
+        </section>
+    </div>
+    {% include 'oscar/partials/login_logout_modal.html'%}
+    {% include "oscar/partials/footer.html" %}
+{% endblock %}
+
+{# Local scripts #}
+{% block scripts %}
+    {{ block.super }}
+    <!-- Twitter Bootstrap -->
+    <script src="{% static 'core/js/bootstrap3/bootstrap.min.js' %}"></script>
+    <!-- Oscar -->
+    <script src="{% static 'core/js/oscar/ui.js' %}"></script>
+{% endblock %}
+
+{% block extrascripts %}
+    {% include "oscar/partials/extrascripts.html" %}
+    {{ block.super }}
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    oscar.init();
+{% endblock %}

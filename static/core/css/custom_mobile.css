@@ -1,0 +1,13 @@
+.cake-cart--mobile .cake-cart__items {
+padding: 30px 0; 
+    }
+.cake-cart--mobile .cake-cart__items .cake-product--mini-cart {
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #efd5ba; 
+    }
+.cake-cart--mobile .cake-cart__items .cake-product--mini-cart:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border: none;
+    }

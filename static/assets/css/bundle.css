@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900|Roboto+Slab:300,400,700|Open+Sans:300,300i,400,400i,600,700,800'); body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 14px;
+    color: #686868;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.img {
+    max-width: 100%;
+    transition: all 0.3s ease-out 0s;
+}
+
+a, .btn {
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+}
+
+a, button, input {
+    outline: medium none;
+    color: #686868;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    color: #383838;
+    margin-top: 0px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 46px;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 37px;
+}
+
+h3 {
+    font-size: 28px;
+}
+
+h4 {
+    font-size: 22px;
+}
+
+h5 {
+    font-size: 18px;
+}
+
+h6 {
+    font-size: 16px;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+li {
+    list-style: none
+}
+
+p {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 24px;
+    color: #3e3e3e;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+hr {
+    margin: 60px 0;
+    padding: 0px;
+    border-bottom: 1px solid #eceff8;
+    border-top: 0px;
+}
+::selection {
+    background: #4fc1f0;
+    color: #fff;
+    text-shadow: none;
+}
+a.button-border span, a.button-border-white span, input, select, textarea {
+    -webkit-transition: all 0.5s ease-out 0s;
+    -moz-transition: all 0.5s ease-out 0s;
+    -ms-transition: all 0.5s ease-out 0s;
+    -o-transition: all 0.5s ease-out 0s;
+    transition: all 0.5s ease-out 0s;
+}
+.pt-170 {
+    padding-top: 170px
+}
+.pr-200 {
+    padding-right: 200px
+}
+.pb-173 {
+    padding-bottom: 173px
+}
+.pl-200 {
+    padding-left: 200px
+}
+
+.ptb-10 {
+    padding: 10px 0
+}
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10 {
+    float: left;
+}
+.col-6 {
+    width: 60%;
+}
+
+.bg-img {
+    background-position: center center;
+    background-size: cover;
+}
+p {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 24px;
+    color: #3e3e3e;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}

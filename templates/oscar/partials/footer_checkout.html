@@ -1,0 +1,33 @@
+{% load base_tags %}
+<footer> 
+    {% block footer %}    
+    <div class="footer-grids">
+    {% footer_checkout as page_footer_checkout %}
+    {% for objects in page_footer_checkout %}
+        <div class="footer one">
+            {{objects.Main_Content}}
+        </div>
+        <div class="footer two">
+            {{objects.Secondary_Content}}
+        </div>
+        <div class="footer three">
+            {{objects.Tertial_Content}}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="copy-right-grids">
+        <div class="copy-left">
+                <p class="footer-gd">©Ambeant. All Rights Reserved | Managed by <a href="https://bizzYetu.com" target="_blank">BizzYetu</a></p>
+        </div>
+        <div class="copy-right">
+            <ul>
+                <li><a href="#">Shipping and returns</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    {% endfor %}
+    </div>
+    {% endblock %}
+</footer>

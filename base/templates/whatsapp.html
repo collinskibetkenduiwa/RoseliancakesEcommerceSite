@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" href="../static/floating-whatsapp/floating-wpp.css">
+<script type="text/javascript" src="..static/floating-whatsapp/floating-wpp.js"></script>
+<div id="myButton">My loveon3 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#myButton').floatingWhatsApp({
+            phone: '5491133359850',
+            popupMessage: 'welcome to akilinn, how can we help you?',
+            message: "I'd like to know more about services offered",
+            showPopup: true,
+            showOnIE: false,
+            headerTitle: 'Welcome!',
+            headerColor: 'crimson',
+            backgroundColor: 'crimson',
+            buttonImage: '<img src="../static/floating-whatsapp/burger.svg" />'
+        });
+    });
+</script>
+
+

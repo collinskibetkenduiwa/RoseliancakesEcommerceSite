@@ -1,0 +1,95 @@
+{% load static %}
+{% include 'oscar/partials/base_css.html'%}
+<body>
+<style>
+/* This only works with JavaScript, 
+if it's not present, don't show loader */
+.no-js #loader { display: none;  }
+.js #loader { display: block; position:fixed; left: 100px; top: 70%; }
+.se-pre-con {
+	position:fixed;
+	left:40%;
+	top:15%;
+	width: 20%;
+	height: 30%;
+	background: url({%static 'core/checkout/images/loader.gif'%}) center no-repeat #fff;
+}
+</style>
+<script>
+// Wait for window load
+$(window).load(function() {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");;
+});
+
+$('#modalPay').modal({
+        show: 'false',
+        backdrop: 'static',
+        keyboard: false
+    });
+</script>
+</div>
+<!--Modal: modalPush-->
+</body>
+<div class="row">
+  <div class="col-sm-9">
+    <div class="button-wrap">
+      <!-- Button trigger modal -->
+    <div id="just_load_please">
+        <div class="se-pre-con">Please enter your mpesa pin to make payment</div>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<script>
+$(document).ready(function() {
+  $("#just_load_please").on("click", function(e) {
+    e.preventDefault();
+    $("#loadMe").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });
+  });
+  });
+  //ajax code here (example for $.post) using test page from https://reqres.in
+</script>
+<style>
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc9.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf) format('truetype');
+}
+body {
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  background: #333;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 1em;
+}
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  color: #999;
+  font-weight: 300;
+  margin-bottom: 55px;
+  margin-top: 45px;
+  text-transform: uppercase;
+}
+h1 small {
+  display: block;
+  font-size: 18px;
+  text-transform: none;
+  letter-spacing: 1.5px;
+  margin-top: 12px;
+}
+</style>

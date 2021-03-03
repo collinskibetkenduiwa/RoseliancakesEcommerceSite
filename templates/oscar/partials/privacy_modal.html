@@ -1,0 +1,27 @@
+{%load static %}
+{% load base_tags %}
+<div class="modal fade" id="privacy_view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="navbar-brand">
+                    <img src="{%static 'core/logo.png'%}" height="60" width='80'alt="Roselian"><div class="col-sm-7 h1"><a href="{{ homepage_url }}">{% block brand_title %}</a><b style='color:red;'><u>User Agreement</u></b>{% endblock %}</div>
+                </a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"style="color:red;">×</span>
+                </button>
+            </div>
+            <div class="modal-bod" id="result">
+                <div style="margin-left:2%;"> 
+                {% terms_and_conditions as terms %}
+                {% for objects in terms %}
+                {{objects.Content|safe}}
+                {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

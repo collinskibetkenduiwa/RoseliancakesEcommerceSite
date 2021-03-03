@@ -1,0 +1,215 @@
+{% extends "oscar/base.html" %}
+{%load static %}
+{% load i18n %}
+{% load history_tags %}
+{% load basket_tags %}
+{% load currency_filters %}
+{% load image_tags %}
+{% load i18n %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}" />
+    <link rel="stylesheet" href="{%static 'core/checkout/css/checkout.css'%}">
+
+{% endblock %}
+
+{% block layout %}
+    <header class="header container-fluid"> 
+        {% block navigation %}
+            {% include "oscar/partials/nav_primary.html" %}
+        {% endblock %}
+    </header>
+        {% include 'oscar/partials/alert_messages.html' %}
+		<!-- checkout section  -->
+		<section class="checkout-section spad">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3  col-md-4 col-sm-4 order-1 order-lg-2" style="margin-left:-1%;padding-right:10px;">
+						<div class="checkout-cart">
+							<h3><b><u>Your Cart</u></b></h3>
+							<ul class="product-list">
+								{% if request.basket.num_lines %}
+								{% for line in request.basket.all_lines %}
+								<li>
+									<div class="pl-thumb">
+									{% with image=line.product.primary_image %}
+										{% oscar_thumbnail image.original "80x80" upscale=True as thumb %}
+										<img  src="{{ thumb.url }}"  height=90px width=90px alt="{{ line.product.get_title }}">
+										<h6 style="color:black;word-wrap:break-word;"><b><strong>{{ line.product.get_title }}</strong></b></h6>
+										<h6>Quantity:Quantity:{{ line.quantity }}</h6>
+										{% if line.is_tax_known %}
+                                            <h6>price:{{ line.line_price_incl_tax|currency:line.price_currency }}</h6>
+                                        {% else %}
+                                            <h6>price:{{ line.line_price_excl_tax|currency:line.price_currency }}</h6>
+                                        {% endif %}
+									{% endwith %}
+									</div>
+								</li>
+								{% endfor%}
+								{% endif %}
+							</ul>
+							<ul class="price-list">
+									{% if request.basket.is_tax_known %}
+								<li class="">Cart total:<b>{{ request.basket.total_incl_tax|currency:request.basket.currency }}</b></h3>
+									{% else%}
+								<li class="">Cart total:<b>{{ request.basket.total_excl_tax|currency:request.basket.currency }}</b></h3>
+									{% endif%} 
+								<li class="">Shipping cost:<b>KSh</b><b id="shipping_cost">0.00</b></h3>
+								<li class="total">Total:<u id="total_cost"></u></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-9 order-2 order-lg-1">
+					    <div class="col-lg-8 col-md-8 col-sm-8  col-xs-12">
+							<h2 style="float:centre;"><b><u>Shipping address</b></u></h2>	
+							{% block shipping_address %}
+								{% if user.is_authenticated %}
+									{% if addresses %}
+										<p>{% trans "An address from your address book?" %}</p>
+												{% for address in addresses %}
+													{% block select_address_form %}
+														<div class="col-sm-6">
+															<div class="well">
+																<address>
+																	{% block select_address_fields %}
+																		{% for field in address.active_address_fields %}
+																			<span>{{ field }}</span>{% if not forloop.first %}<br/>{% endif %}
+																		{% endfor %}
+																	{% endblock %}
+																</address>
+																<form action="{% url 'checkout:shipping-address' %}" method="post" id="select_shipping_address_{{ address.id }}">
+																	{% csrf_token %}
+																	<input type="hidden" name="action" value="ship_to" />
+																	<input type="hidden" name="address_id" value="{{ address.id }}" />
+																	{% if address.is_default_for_shipping %}
+																		<button type="submit" class="btn btn-success btn-large ship-address" data-loading-text="{% trans 'Saving...' %}"><i class="icon-ok"></i> {% trans "Ship to your default shipping address" %}</button>
+																	{% else %}
+																		<button type="submit" class="btn btn-primary btn-large ship-address" data-loading-text="{% trans 'Saving...' %}">{% trans "Ship to this address" %}</button>
+																	{% endif %}
+
+																	<div class="btn-group address-controls">
+																		<a href="{% url 'checkout:user-address-update' pk=address.id %}" class="btn btn-default btn-sm">{% trans "Edit address" %}</a>
+																		<button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+																			<span class="caret"></span>
+																		</button>
+																		<ul class="dropdown-menu">
+																			<li><a href="{% url 'checkout:user-address-delete' pk=address.id %}" class="btn-remove-address">{% trans "Delete" %}</a></li>
+																		</ul>
+																	</div>
+																</form>
+																<h3><a href="#" data-toggle="modal" data-target="#address_add">{% trans "Or a new address?" %}</a></h3>
+																<div class="modal fade product_view" id="address_add">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+																				<a href="#" class="navbar-brand">
+																				<h1>New Address </h1>
+																				</a>
+																			</div>
+																			<div class="modal-body">
+																				<form  method="post"  style="background-color:white;" autocomplete='on' id="new_shipping_address" class="form form-horizontal" style="float:left;">
+																					{% csrf_token %}
+																					<div class="form-group ">
+																							<label for="id_first_name" class="col-sm-4 control-label required">
+																								name
+																							</label>
+																							<div class="col-sm-7">
+																									<input type="text" name="first_name" maxlength="255" class="form-control" required id="id_first_name">
+																							</div>
+																					</div> 
+																					{% include 'location.html'%}
+																					<div class="form-group ">
+																						<label for="id_line1" class="col-sm-4 control-label required">
+																							Estate or building:
+																						</label>
+																						<div class="col-sm-7">
+																							<input type="text" name="line1" maxlength="255" class="form-control" required id="id_line1">
+																						</div>
+																					</div>    
+																					<div class="form-group ">
+																						<label for="id_phone_number" class="col-sm-4 control-label required" >
+																							Phone number
+																						</label>
+																						<div class="col-sm-7">
+																							<input type="text" name="phone_number" maxlength="128" class="form-control" placeholder="0712345678" required id="id_phone_number">
+																							<span class='help-block'>
+																								In case we need to call you about your order
+																							</span>
+																						</div>
+																					</div>
+																					<div class="form-group ">
+																						<label for="id_notes" class="col-sm-4 control-label">
+																							Instructions
+																						</label>
+																						<div class="col-sm-7">
+																							<textarea name="notes" cols="40" rows="10" class="form-control" id="id_notes">
+																							</textarea>
+																							<span class='help-block'>
+																								Tell us anything we should know when delivering your order.Including a message or a note
+																							</span>
+																						</div>
+																					</div>
+																					<div class="form-group">
+																						<div class="col-sm-offset-4 col-sm-8">
+																							<button type="submit" class="btn btn-lg btn-primary" data-loading-text="Continuing...">Continue</button>
+																							or"<a href="/basket/">return to basket</a>
+																							<hr/>
+																							<p style="color:blue;"><u>Risk whatever it takes to achieve your dream</u></p>
+																						</div>
+																					</div>
+																				</form>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% if forloop.counter|divisibleby:2 %}
+														{% endif %}
+													{% endblock %}
+												{% endfor %}
+									{% else %}
+										{% include 'oscar/checkout/new_address.html'%}	
+								    {% endif %}
+							{% else %}
+								{% include 'oscar/checkout/new_address.html'%}	
+							{% endif %}
+						</div>	
+						<div class="col-lg-3 col-xs-12 col-md-12 col-sm-12 " style="background:rgb(253, 230, 230);">
+							<h2><b><u>Shipping method</b></u></h2>
+								<p><input type="radio" id="rdo-1" name="radio-grp" checked >Home and office delivery</p>
+								<p><input type="radio" id="rdo-1" name="radio-grp" disabled >Pick up station<small style="color:red;">[comming soon]</small></p>
+						</div>
+						{% endblock shipping_address %}
+					</div>
+				</div>
+			</div>
+		</section>
+	<form method="POST" action="/love" id="total_form">
+		<input type="hidden" id="total" name="total" value="">
+	</form>
+	<script>
+	function submittotalForm(){
+		documents.getElementById('total_form').submit()
+
+	}
+	</script>
+    {% include "oscar/partials/footer.html" %}
+{% endblock %}
+
+{# Local scripts #}
+{% block scripts %}
+    {{ block.super }}
+    <!-- Twitter Bootstrap -->
+    <script src="{% static 'core/js/bootstrap3/bootstrap.min.js' %}"></script>
+    <script src="{%static 'core/checkout/js/jquery.steps.js'%}"></script>
+    <script src="{%static 'core/checkout/js/checkout.js'%}"></script>
+
+    <!-- Oscar -->
+    <script src="{% static 'core/js/oscar/ui.js' %}"></script>
+{% endblock %}
+
+{% block extrascripts %}
+    {% include "oscar/partials/extrascripts.html" %}
+    {{ block.super }}
+{% endblock %}

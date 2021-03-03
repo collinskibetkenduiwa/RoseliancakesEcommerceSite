@@ -1,0 +1,20 @@
+{% load static compress %}
+{% load static %}
+{% compress css %}
+<link rel="stylesheet" href="{%static 'assets/css/style.css'%}">
+<link rel="stylesheet" href="{%static 'assets/css/responsive.css'%}">
+<link rel="stylesheet" href="{%static 'assets/css/bundle.css'%}">
+        <!-- Css Styles -->
+<link rel="stylesheet" href="{%static 'core/css/owl.carousel.min.css'%}" type="text/css">
+<link rel="stylesheet" href="{%static 'core/css/slicknav.min.css'%}" type="text/css">
+<!-- Page Preloder -->
+{% if request.user_agent.is_mobile %}
+    <link rel="stylesheet" href="{%static 'core/css/flaticon.css'%}">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="{%static 'mobile/css/mobile_style.css'%}">
+{% endif %}
+{% endcompress %}
+<link rel="stylesheet" href="{%static 'core/css/flaticon.css'%}"/>
+<link href="{% static 'core/css/custom.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{%static 'core/css/font-awesome.min.css'%}"/>
+

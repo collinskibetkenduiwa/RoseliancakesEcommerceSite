@@ -1,0 +1,35 @@
+{% extends "simple_pages/default.html" %}
+
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <style type="text/css">
+        body {
+            opacity: 0;
+        }
+        body.loaded {
+            transition: opacity 500ms linear 250ms;
+            opacity: 1;
+        }
+        body.unloaded {
+            transition: opacity 200ms linear;
+            opacity: 0;
+        }
+    </style>
+{% endblock extra_head %}
+
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            $('body').addClass("loaded");
+        });
+
+        $(window).on('beforeunload', function() {
+            $('body').addClass("unloaded");
+        });
+    </script>
+
+    {{ block.super }}
+{% endblock scripts %}

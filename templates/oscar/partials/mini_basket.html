@@ -1,0 +1,30 @@
+{% load currency_filters %}
+{% load i18n %}
+<div class="cake-cart--mini">
+    {% if request.basket.is_tax_known %}
+            <ul class="navbar_user">
+                <li class="checkout">
+                    <a href="{% url 'basket:summary' %}" class="cake-cart__toggle">
+                        <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:20px;margin-top:5px;"></i>
+                        <span id="checkout_items" class="checkout_items">{{request.basket.num_items}}</span>
+                    </a>
+                <li>
+                   {% include "oscar/basket/partials/basket_quick.html" %}>
+                </li>
+            </ul>
+    {% else %} 
+            <ul class="navbar_user">
+                <li class="checkout">
+                    <a href="{% url 'basket:summary' %}" class="cake-cart__toggle"style="font-size:20px;margin-top:5px;">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <span id="checkout_items" class="checkout_items">{{request.basket.num_items}}</span>
+                    </a>
+                </li>
+                <li>
+                    {% include "oscar/basket/partials/basket_quick.html" %}
+                </li>
+            </ul>
+    {% endif %}
+
+</div>
+

@@ -1,0 +1,181 @@
+{% load category_tags %}
+{% load i18n %}
+{% load static %}
+<!--Json-ld-logo-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "http://www.roseliancakes.co.ke",
+      "logo": "www.roseliancakes.co.ke{%static 'core/logo.png'%}"
+    }
+    </script>
+
+{% if request.user_agent.is_mobile %} 
+<div class="navbar primary navbar-fixed-top navbar-inverse mobile-nav-top" style="background-color:white;color:black;">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div style="float:left;margin-left:-20;margin-top:8px;" class="col-sm-2 col-md-2" >
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="menu_icon"><i class="fa fa-bars" style="font-size:25px;color:red;"></i></span>
+                    </button>   
+                </div>
+                <style>
+                .centre {
+                float: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                }
+                </style>
+               
+                <div class='centre'class="col-sm-4 col-md-4"><!--centre logo at the middle of nav bar-->
+                    <a href="{{ homepage_url }}"><img src="{%static 'core/logo.png'%}" height="50" width='60'></a>
+                </div>
+                <div class="navbar-right" style="float:right;" >
+                    <span class="col-md-6 col-sm-6 col-col-xs-6">
+                        {% if user.is_authenticated %}
+                        <a href="#"  data-toggle="collapse" data-target="#mobileaccount" 
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="flaticon-profile" style="font-size:30px;color:red;margin-right:20px;margin-top:8px;" ></i></a>
+                        
+                        {% else %}
+                            <a id="login_link" href="/accounts/login/"><i class="flaticon-profile" style="font-size:30px;color:red;margin-right:20px;margin-top:8px;"></i></a></li>
+                        {% endif %}
+                        
+                        {% if request.basket.is_tax_known %}
+                            <a href="/basket/"><i class="fa" style="font-size:28px;color:red;" >&#xf07a;</i>
+                            <span class='badge badge-warning' id='lblCartCount'> {{request.basket.num_items}}</span></a>
+                        {% else %} 
+                            <a href="/basket/"><i class="fa" style="font-size:28px;color:red;" >&#xf07a;</i>
+                            <span class='badge badge-warning' id='lblCartCount'> {{request.basket.num_items}}</span></a>
+                        {% endif %}
+                    </span>
+                </div>    
+                <div class="collapse navbar-collapse navbar-light float-left" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                            <form method="get" action="{% url 'search:search' %}" class="d-flex justify-content-between search-inner">
+                                    <div class="search">
+                                    <input type="search" name="q" placeholder="Search" tabindex="1" class="search__input" aria-label="search" placeholder="enter your search">
+                                        <button type="submit" class="search__btn" aria-label="submit search"><i class="fa fa-search"></i></button>
+                                    </div>
+                            </form>
+                        {% category_tree depth=3 as tree_categories %}
+                        <li class=""><a tabindex="-1" href="{% url 'catalogue:index' %}">{% trans "All available cakes" %}</a></li>
+                        {% if tree_categories %}
+                            <li class="mobile-category-menu"></li>
+                            {% for tree_category in tree_categories %}
+                                <li>
+                                    <a href="{{ tree_category.url }}">
+                                        {% if tree_category.pk == category.pk %}
+                                            <strong>{{ tree_category.name }}</strong>
+                                        {% else %}
+                                            {{ tree_category.name }}{% if tree_category.has_children %} &nbsp; <i class="fa fa-angle-right"></i>{% endif %}
+                                        {% endif %}
+                                    </a>
+
+                                    {% if tree_category.has_children %}<ul class="sub-menu">{% else %}</li>{% endif %}
+                                    {% for n in tree_category.num_to_close %}
+                                        </ul></li>
+                                    {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        <li class="divider"></li>
+                            <li class="nav-item"><a href="{% url 'offer:list' %}" style="color:red;">{% trans "Offers" %}</a></li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse main-menu-item" id="mobileaccount">
+                    <ul class="navbar-nav " style="font-size:20px;">
+
+                        <li><a href= "/accounts/login/"><i class="fa fa-user" aria-hidden="true"></i>Account</a></li>
+                        <hr/>
+                        <li><a href="{% url 'customer:logout' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>Logout</a></li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+</div>
+<hr/> 
+{% else %}
+{% comment %} {% include "oscar/partials/pre_loader.html" %}> {% endcomment %}
+<div class="navbar primary navbar-fixed-top navbar-inverse " style="background-color:white;color:black;">
+    <div class="container-fluid" style="color:black;">
+        <div class="navbar-header pull-right">
+            {% include "oscar/partials/nav_accounts.html" %}
+        </div>
+        <style>
+.centre {
+  float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+     </style>
+        <div class='centre'><!--centre logo at the middle of nav bar-->
+            <a href="{{ homepage_url }}"><img src="{%static 'core/logo.png'%}" height="80" width='80'></a>
+        </div>
+        <div class="navbar-collapse primary-collapse collapse">
+            {% block nav_dropdown %}
+                <ul id="browse" class="nav navbar-nav">
+                {% if request.user_agent.is_tablet %}
+                {% else %}
+                    <li>
+                        <style>
+                        .{
+                            display:flex;
+                            align-self:centre;
+                        }
+                        </style>
+                        <div class="logo-container">
+                            <h1 style="color: #e41d1d;">Roselian cakes</h1>
+                            <h6 style="color:black;">&nbsp;&nbsp;&nbsp; Indulge at your convenience</h6>
+                        </div>    
+                    </li>
+                {% endif %}    
+                    <li>
+                        <a href="#" data-toggle="dropdown" class="nav-dropdown">
+                            browse all
+                            <b class="caret"></b>
+                        </a>
+        
+                        <ul class="dropdown-menu" data-navigation="dropdown-menu">
+                            {% category_tree depth=2 as tree_categories %}
+                            <li><a tabindex="-1" href="{% url 'catalogue:index' %}">{% trans "All available cakes" %}</a></li>
+                            {% if tree_categories %}
+                                <li class="divider"></li>
+                                {% for tree_category in tree_categories %}
+                                    {% if tree_category.has_children %}
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a>
+                                            <ul class="dropdown-menu">
+                                            {% else %}
+                                                <li><a tabindex="-1" href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a></li>
+                                            {% endif %}
+
+                                            {% for close in tree_category.num_to_close %}
+                                                </ul></li>
+                                            {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                            <li class="divider"></li>
+                            {% block nav_dropdown_extra_items %}
+                                <li><a href="{% url 'offer:list' %}">{% trans "Offers" %}</a></li>
+                            {% endblock %}
+                        </ul>
+                    </li>
+                    <li>
+                    {% include "oscar/partials/search.html" %}
+                    </li>
+                    <li class="brand">
+                    </li>
+                </ul>
+            {% endblock %}
+        </div><!-- /navbar-collapse -->
+    </div>
+</div>
+<!-- /navbar -->
+{% endif %}

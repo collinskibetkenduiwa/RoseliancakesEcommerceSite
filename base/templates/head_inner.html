@@ -1,0 +1,5 @@
+{% load base_tags %}
+{% inner_head as head_inner %}
+{% for objects in head_inner %}
+{{objects.Content|safe}}
+{% endfor %}

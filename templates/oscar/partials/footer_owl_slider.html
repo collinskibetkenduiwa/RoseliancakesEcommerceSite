@@ -1,0 +1,17 @@
+{% load static %}
+{% load base_tags %}
+    <!-- Footer Section Begin -->
+    <div class="footer-owl-section">
+            <div class="partner-logo owl-carousel">
+                {% partners as our_partners %}
+                {% for objects in our_partners %}
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <a href ="{{objects.Link}}"><img src="{{objects.Logo.url}}" alt="{{objects.Name}}"></a>
+                    </div>
+                </a>
+                {% endfor %}
+        </div>
+    </div>
+    <!-- Footer Section End -->
+ 

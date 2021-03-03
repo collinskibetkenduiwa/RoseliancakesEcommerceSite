@@ -1,0 +1,81 @@
+{% extends "oscar/base.html" %}
+{% load static %}
+{% block styles %}
+{% load static compress %}
+{% compress css %}
+        <link rel="stylesheet" type="text/css" href="{% static "core/css/style.css" %}" />
+{% endcompress %}
+{% endblock %}
+
+{% block layout %}
+    <header class="header container-fluid">
+        {% block navigation %}
+            {% include "oscar/partials/nav_primary.html" %}
+            <hr/>
+        {% endblock %}
+    </header>
+    {% if request.user_agent.is_mobile %}
+    {# Main content of page - other layout templates may override this block #}
+    {% include "oscar/partials/alert_messages.html" %}
+    {% else %}
+    {% endif  %}
+    {% block content_wrapper %}
+        <div class="container-fluid page">
+            <div class="page_inner">
+                {% block breadcrumbs %}{% endblock %}
+                {% block header %}
+                    <div class="page-header action">
+                        <h1>{% block headertext %}{% endblock %}</h1>
+                    </div>
+                {% endblock %}
+                {% block subnavigation %}{% endblock %}
+                <div class="content">
+                    {% block subheader %}{% endblock subheader %}
+
+                    {# Div exists for AJAX updates to entire content section #}
+                    <div id="content_inner">{% block content %}{% endblock %}</div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% if request.user_agent.is_mobile %}
+    {% include "oscar/partials/footer.html" %}
+    {% comment %} {% include "oscar/partials/floating_customize_cake.html" %} {% endcomment %}
+    <h6>by <strong style="color:blue;">CAPITAL Skyrax</h6>
+{% else%}
+    {% include "oscar/catalogue/partials/product_view_modal.html" %}
+    {% include 'oscar/partials/login_logout_modal.html'%}
+    {% include "oscar/partials/footer.html" %}
+    {% comment %} {% include "oscar/partials/floating_customize_cake.html" %} {% endcomment %}
+    <h6>by <strong style="color:blue;">CAPITAL Skyrax</h6>
+
+{% endif %}    
+{% endblock %}
+
+{% block cdn_scripts %}
+  {{ block.super }}
+  {% if use_less and debug %}
+    {# Load the on-the-fly less compiler. Never do this in production. #}
+  {% endif %}
+{% endblock %}
+
+{# Local scripts #}
+{% block scripts %}
+    {{ block.super }}
+    <!-- Twitter Bootstrap -->
+{% compress js %}
+    <script src="{% static 'core/js/bootstrap3/bootstrap.min.js' %}"></script>
+    <!-- Oscar -->
+    <script src="{% static 'core/js/oscar/ui.js' %}"></script>
+{% endcompress %}
+{% endblock %}
+
+{% block extrascripts %}
+    {% include "oscar/partials/extrascripts.html" %}
+    {{ block.super }}
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    oscar.init();
+{% endblock %}

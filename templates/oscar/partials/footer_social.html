@@ -1,0 +1,17 @@
+{% load base_tags %}
+<div class="social-links-war">
+		<div class="social-links">
+		{% footer_social as page_footer_social %}
+		{% for objects in page_footer_social%}
+			<a href="{{objects.Instagram}}" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
+			<a href="{{objects.Twitter}}" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
+   			{% if request.user_agent.is_mobile %} 
+			{% else %}
+			<a href="{{objects.Facebook}}" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
+			<a href="{{objects.Youtube}}" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
+			<a href="{{objects.Pinterest}}" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
+            {% endif %}
+		{% endfor %}
+		</div>
+		<hr/>
+</div>

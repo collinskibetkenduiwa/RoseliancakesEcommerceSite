@@ -1,0 +1,48 @@
+{% load i18n %}
+    <div class="navbar-collapse account-collapse collapse">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                {% block nav_account_navbar_authenticated %}
+                    <li>
+                        {% if num_unread_notifications > 0 %}
+                            {# If user has new notifications - we change account link to go to inbox #}
+                            <a href="{% url 'customer:notifications-inbox' %}">
+                                <i class="fas fa-user"></i>
+                                {% if request.user_agent.is_tablet %}
+                                {% else %}
+                                {{ user.email}}
+                                {% endif %}
+                                <span class="label label-warning">{{ num_unread_notifications }}</span>
+                            </a>
+                        {% else %}
+                            <ul>
+                                <li class="account">
+                                    {% if request.user_agent.is_tablet %}
+                                    <a href="#"><i class="flaticon-profile"  style="font-size:25px;" ></i>
+                                    {% else %}
+                                    <a href="#"><i class="flaticon-profile"  style="font-size:12px;" ></i>
+                                    {{ user.email}}</a>
+                                    {% endif %}
+                                    <ul class="account_selection">
+										<li><a href= "/accounts/login/"><i class="fa fa-user" aria-hidden="true"></i>My account</a></li>
+										<li><a href="{% url 'customer:logout' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>Logout</a></li>
+									</ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </li>
+                    {% if user.is_staff or perms.partner.dashboard_access %}
+                        <li><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
+                    {% endif %}
+                    <li>{%include 'oscar/partials/mini_basket.html'%}</li>
+                    {% endblock %}
+                {% else %}
+                    <li><a id="login_link" href="#" data-toggle="modal" data-target="#login-modal"><i class="flaticon-profile" style="font-size:22px;color:white;"></i>Login</a></li>
+                    <li>{%include 'oscar/partials/mini_basket.html'%}</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    
+   

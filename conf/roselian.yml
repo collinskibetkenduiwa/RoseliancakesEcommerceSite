@@ -1,0 +1,211 @@
+- hosts: all
+  vars_files:
+    - .vars.yml
+  gather_facts: false
+  become: yes
+  become_user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  pre_tasks:
+    - name: Install Pythonn 2 for Ansible
+      raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
+      register: output
+  tasks: 
+        
+          - name: install Python 2 if needed
+            raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+            become: yes
+            register: output
+            changed_when: output.stdout != ""
+
+          - name: install aptitude if needed
+            raw: test -e /usr/bin/aptitude || (apt -y update && apt install -y aptitude)
+            become: yes
+            register: output
+            changed_when: output.stdout != ""
+          - name: Install base packages
+            apt: 
+              name: "{{ packages }}"
+            vars:
+              packages:
+                - locales
+                - build-essential
+                - htop
+                - git
+                - python3-apt
+                - python3-pip
+                - python-certbot-nginx
+
+          - name: installing pip to install bsd_wheel
+            command: apt install python3-pip
+            become: yes
+
+          - name: Upgrade pip
+            pip: name=pip state=latest
+       
+          - name: install pexpect
+            pip:
+              name: pexpect
+            become: yes  
+
+          - name : remove folder ifexists
+            shell: rm -fr /home/godfrey/rosealiancakes
+            command_warnings: false
+
+          - name: Git clone project
+            expect:
+              command: git clone https://gitlab.com/godfreymakara/rosealiancakes.git
+              responses:
+                Username: "{{ GITUSER }}" # Username is a regex
+                Password: "{{ GITPASSWORD }}" # Password is a regex
+            no_log: true        
+            ignore_errors: yes 
+          
+          - name: upgrading pip
+            command: pip3 install --upgrade pip
+
+          - name: setting up python fordevs
+            expect:            
+              command:  apt-get install libpq-dev python-dev python3-venv
+              responses:
+                Do you want to continue? : "Y"
+            become: yes
+
+          - name: create python3 virtual environment
+            command: python3 -m venv venv
+            args:
+              chdir: /home/godfrey/rosealiancakes
+
+    
+          - name: Fixing top level required modules
+            shell: source venv/bin/activate
+            shell: pip3 install django-oscar
+            shell: pip3 install django==2.2
+            shell: pip3 install python-decouple
+            args:
+              chdir: /home/godfrey/rosealiancakes
+              
+          - name: copy .env
+            copy:
+              src: /home/godfrey/Documents/websites/roseliancakes/.env
+              dest: /home/godfrey/rosealiancakes
+            become: yes
+
+          - name: Install PostgreSQL
+            sudo: true
+            apt: name={{ item }} update_cache=true state=installed
+            with_items:
+              - postgresql
+              - postgresql-contrib
+              - libpq-dev
+              - python3-psycopg2
+            tags: packages
+            become: yes
+
+          - name: Ensure the PostgreSQL service is running
+            service: name=postgresql state=started enabled=yes
+
+          - name: Ensure database is created
+            sudo_user: postgres
+            postgresql_db: name={{NAME}}
+                      encoding='UTF-8'
+                      lc_collate='en_US.UTF-8'
+                      lc_ctype='en_US.UTF-8'
+                      template='template0'
+                      state=present
+          
+          - name: Ensure user has access to the database
+            sudo_user: postgres
+            postgresql_user: db={{ NAME }}
+                        name={{ USER }}
+                        password={{ PASSWORD }}
+                        priv=ALL
+                        state=present
+
+          - name: Ensure user does not have unnecessary privileges
+            sudo_user: postgres
+            postgresql_user: name={{ db_user }}
+                        role_attr_flags=NOSUPERUSER,NOCREATEDB
+                        state=pr
+          - name: activate venv and making migrations and collecting static files
+            shell: |
+              . /home/godfrey/rosealiancakes/venv/bin/activate
+              python3 /home/godfrey/rosealiancakes/manage.py makemigrations
+              python3 /home/godfrey/rosealiancakes/manage.py migrate  
+            ignore_errors: yes     
+          - name: configuring gunicorn
+            shell: |
+              . /home/godfrey/rosealiancakes/venv/bin/activate
+              cd /home/godfrey/rosealiancakes
+              gunicorn --daemon --workers 3 --bind unix:/home/godfrey/rosealiancakes/roselian.sock Roselian.wsgi     
+          - name: Recursively change ownership of a directory
+            file:
+              path: /home/godfrey/rosealiancakes
+              state: directory
+              recurse: yes
+              owner: godfrey
+          - name: ensure nginx is at the latest version
+            apt: name=nginx state=latest
+            become: yes
+          - name: start nginx
+            service:
+                name: nginx
+                state: started
+            become: yes
+          - name: copy the nginx config file and restart nginx
+            copy:
+              src: /home/godfrey/Documents/websites/rosealiancakes/conf/nginx
+              dest: /etc/nginx/site-available
+            become: yes
+          - name: create symlink
+            file:
+              src: /etc/nginx/site-available/nginx
+              dest: /etc/nginx/Roselian-enabled/default
+              state: link
+            become: yes
+          
+          - name: restart nginx
+            service:
+              name: nginx
+              state: restarted
+            become: yes
+          - name: add repository for certbot/installing it
+            apt_repository: 
+              repo: ppa:certbot/certbot
+              state: present
+            
+          - name: Install base packages
+            apt: 
+              name: "{{ packages }}"
+            vars:
+              packages:
+                - python-certbot-nginx
+                          
+          - name: Enable UFW
+            ufw:
+              state: enabled
+
+          - name: Allow OpenSSH
+            ufw:
+              rule: allow
+              name: OpenSSH
+
+          - name: Allow Nginx Full
+            ufw:
+              rule: allow
+              name: Nginx Full
+          - name: stop nginx to generate certificates
+            service:
+                name: nginx
+                state: stopped
+          - name: Obtain SSL certificate
+            shell: certbot  --nginx --noninteractive --agree-tos --email godfreymakarandungu@gmail.com -d  rosealiancakes.duckdns.org -d www.rosealiancakes.duckdns.org 
+            become: yes
+          - name: Free port 80
+            command: fuser -k 80/tcp
+            become: yes
+  
+          - name: start nginx
+            service:
+                name: nginx
+                state: restarted

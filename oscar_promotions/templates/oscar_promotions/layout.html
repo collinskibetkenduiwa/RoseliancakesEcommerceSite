@@ -1,0 +1,128 @@
+{% extends "oscar/layout.html" %}
+{% load promotion_tags %}
+{% load category_tags %}
+{% load i18n %}
+{% load static %}
+{% load pages_tags%}
+{% block title %}
+    {{ shop_name }} - {{ shop_tagline }}
+    <title>The title of the page</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.roseliancakes.co.ke",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.roseliancakes.co.ke/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+{% endblock %}
+{% block content_wrapper %}
+<link href="{%static 'home/css/home.css'%}" rel="stylesheet" type="text/css" media="all" />
+{% if request.user_agent.is_mobile %}
+<div class="col-xs-12 col-sm-12 col-md-12">
+{% else%}
+<div class="row" style='display:'>
+	<div class=" col-md-3 col-sm-3 col-lg-3 col-xl-3">
+		<div class=" overflow clearfix">
+			<div class="categori-menu-slider-wrapper clearfix">
+				<div class="categories-menu">
+					<div class="category-heading">
+						<h2 style="margin-left:10%;"> All Products</i></h2>
+					</div>
+                    {% category_tree depth=3 as tree_categories %}
+					{% if tree_categories %}
+						<div class="menu-category">
+							<ul class="main-category-menu">
+								{% for tree_category in tree_categories %}
+									<li>
+										<a href="{{ tree_category.url }}">
+											{% if tree_category.pk == category.pk %}
+												<strong>{{ tree_category.name }}</strong>
+											{% else %}
+												{{ tree_category.name }}{% if tree_category.has_children %} &nbsp; <i class="fa fa-angle-right"></i>{% endif %}
+											{% endif %}
+										</a>
+
+										{% if tree_category.has_children %}<ul class="submenu">{% else %}</li>{% endif %}
+										{% for n in tree_category.num_to_close %}
+											</ul></li>
+										{% endfor %}
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-9 col-xl-9 col-md-9 col-sm-8">
+<style>
+.carousel{
+	margin-top:8%;
+	margin-bottom:0.5%;
+	width: 100%;
+    height: auto;
+}
+</style> 
+{% endif %}        
+ <!-- banner -->
+		<!-- banner -->
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner" role="listbox">
+				{% if request.user_agent.is_mobile %}
+				{% homemobilecarousel as carousel %}
+				{% for objects in carousel %}
+                
+				<style>
+				.carousel .item{{objects.id}}{
+						background:url({{objects.Image.url}}) no-repeat;
+						background-size: cover;
+					} 
+				</style>
+				<div class="item {% if forloop.first %} active{% endif %} item{{objects.id}}" > 
+					<div class="container">
+						<div class="carousel-caption">
+							<h3>{{objects.Title}}</h3>
+							<p>{{objects.Content|safe}}</p>
+							<a  href="{{objects.Url}}" style="color:red;">{{objects.Button_Title}}</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+                {% else %}
+				{% homemaincarousel as carousel %}
+				{% for objects in carousel %}
+				<style>
+				.carousel .item{{objects.id}}{
+						background:url({{objects.Image.url}}) no-repeat;
+						background-size: cover;
+					} 
+				</style>
+				<div class="item {% if forloop.first %} active{% endif %} item{{objects.id}}" > 
+					<div class="container">
+						<div class="carousel-caption">
+							<h3>{{objects.Title}}</h3>
+							<p>{{objects.Content|safe}}</p>
+							<a  href="{{objects.Url}}" style="color:red;">{{objects.Button_Title}}</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+				{%endif%}
+			</div>
+		</div> 
+	</div>
+</div> 
+    <div id="promotions" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+         {% for promotion in promotions_page %}
+            {% render_promotion promotion %}
+        {% endfor %}
+    </div>
+{% if request.user_agent.is_mobile %}
+{%endif%}
+	{% include "oscar/catalogue/partials/add_to_basket_modal.html"%}
+{% endblock content_wrapper %}

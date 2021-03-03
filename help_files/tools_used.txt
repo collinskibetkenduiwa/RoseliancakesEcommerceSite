@@ -1,0 +1,16 @@
+Nginx
+Gunicorn
+Nagios-custom check pending security
+Redis
+Tick
+Grafana
+Supervisor
+LetsEncrypt
+Git versioning
+PostgreSQl
+RabittMQ
+Firebug
+ngrok
+Uvicorn
+vault -keep secure info
+Vagrant-local virtual test machine

@@ -1,0 +1,253 @@
+/* ----------------
+  Checkout Page
+---------------------*/
+body{
+  background-color:white;
+}
+.checkout-section {
+	margin-top:7%;
+}
+.checkout-form .cf-title {
+	font-size: 16px;
+	font-weight: 700;
+	color: rgb(253, 230, 230);
+	line-height: 1;
+	border-radius: 50px;
+	background: #3b3b3b;
+	padding: 21px 29px 20px;
+	margin-bottom: 66px;
+}
+
+.checkout-form p {
+	font-size: 16px;
+	color: #414141;
+}
+
+.checkout-form h4 {
+	font-size: 18px;
+	color: #414141;
+}
+
+.checkout-form input[type=text] {
+	width: 100%;
+	height: 44px;
+	border: none;
+	padding: 0 18px;
+	background: #f0f0f0;
+	border-radius: 40px;
+	margin-bottom: 20px;
+	font-size: 14px;
+}
+
+.checkout-form .address-inputs {
+	margin-bottom: 54px;
+}
+
+.address-rb {
+	text-align: right;
+	margin-bottom: 30px;
+}
+
+.address-rb .cfr-item {
+	display: inline-block;
+}
+
+.cf-radio-btns .cfr-item {
+	margin-bottom: 15px;
+}
+
+.cf-radio-btns label {
+	display: block;
+	font-size: 16px;
+	color: #d43030;
+	margin-bottom: 0;
+	padding-left: 30px;
+	position: relative;
+	cursor: pointer;
+}
+
+.cf-radio-btns label:after {
+	position: absolute;
+	content: "";
+	width: 5px;
+	height: 5px;
+	left: 4px;
+	top: 8px;
+	background: #414141;
+	border-radius: 50%;
+	opacity: 0;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.cf-radio-btns label:before {
+	position: absolute;
+	content: "";
+	width: 13px;
+	height: 13px;
+	left: 0;
+	top: 4px;
+	border: 2px solid #e1e1e1;
+	border-radius: 40px;
+}
+
+.cf-radio-btns input[type=radio] {
+	visibility: hidden;
+	position: absolute;
+}
+
+.cf-radio-btns input[type=radio]:checked+label:after {
+	opacity: 1;
+}
+
+.shipping-btns {
+	margin-bottom: 50px;
+}
+
+.shipping-btns .cf-radio-btns label {
+	font-size: 18px;
+	font-weight: 600;
+	padding-left:20px;
+}
+
+.payment-list {
+	list-style: none;
+	margin-bottom: 40px;
+}
+
+.payment-list li {
+	font-size: 18px;
+	font-weight: 600;
+	color: #414141;
+	margin-bottom: 20px;
+}
+
+.payment-list li a,
+.payment-list li span {
+	padding-left: 23px;
+}
+
+.submit-order-btn {
+	width: 100%;
+	min-height: 58px;
+}
+
+.checkout-cart {
+	background: #e9a5a5;
+	padding: 10px 24px 30px;
+	border-radius: 25px;
+}
+
+.checkout-cart h3 {
+	margin-bottom: 10px;
+	color:black;
+	font-size:x-large;
+	padding-left:30%;
+}
+
+.checkout-cart .product-list {
+	list-style: none;
+}
+
+.checkout-cart .product-list li {
+	overflow: hidden;
+	display: block;
+	margin-bottom: 29px;
+}
+
+.checkout-cart .product-list .pl-thumb {
+	overflow: hidden;
+	margin-right:2px;
+	width: 100%;
+	display:inline-block;
+}
+
+.checkout-cart .product-list .pl-thumb img {
+	min-width: 30%;
+	float: left;
+	margin-right:5px;
+
+}
+
+.checkout-cart .product-list h6 {
+	font-weight: 700;
+	color: #0f0f0f;
+	padding-top: 5px;
+	margin-bottom: 5px;
+}
+
+.checkout-cart .product-list p {
+	font-size: 16px;
+	margin-bottom: 0;
+}
+
+.checkout-cart .price-list {
+	padding-left: 17px;
+	padding-right: 5px;
+	list-style: none;
+}
+
+.checkout-cart .price-list li {
+	overflow: hidden;
+	display: block;
+	font-size: 18px;
+	color: #414141;
+	margin-bottom: 10px;
+}
+
+.checkout-cart .price-list li span {
+	float: right;
+	width: 60px;
+	text-align: left;
+}
+
+.checkout-cart .price-list li.total {
+	padding-top: 35px;
+	font-weight: 700;
+}
+/*  */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 100px; /* Set a default minimum width */
+    background-color:rgb(224, 129, 129) ; /* Black background color */
+    color:rgb(255, 254, 254); /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 79%; /* Center the snackbar */
+    bottom: 20%; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.show {
+    visibility: visible !important; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}

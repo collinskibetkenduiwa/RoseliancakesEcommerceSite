@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name roseliancakes.co.ke www.roseliancakes.co.ke ;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location /static/ {
+            root /home/godfrey/roseliancakes/;
+    }
+
+    location /media/ {
+            root /home/godfrey/roseliancakes/;
+    }
+
+    location / {
+            include proxy_params;
+            proxy_pass http://unix:/home/godfrey/roseliancakes/roselian.sock;
+    }
+}
+D1CCA9C1-A832-E380-4D0F-F9D74C1EB0BB

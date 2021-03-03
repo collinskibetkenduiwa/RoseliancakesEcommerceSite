@@ -1,0 +1,8 @@
+django-prometheus
+sentry-sdk==0.15.1
+qrcode 
+django_twilio
+django_daraja
+django-compressor
+schedule
+django-admin-ordering

@@ -1,0 +1,85 @@
+{% load form_tags %}
+{% load widget_tweaks %}
+
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    {% block new_address_form %}
+        <form  method="post"  autocomplete='on' id="new_shipping_address" class="form form-horizontal" style="float:left;">
+                {% csrf_token %}
+                {% if form.is_bound and not form.is_valid %}
+                    <div class="alert alert-danger">
+                        <strong>Oops! We found some errors</strong> -please check the error messages below and try again
+                    </div>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <i class="icon-exclamation-sign"></i> {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        <label for="id_first_name" class="col-sm-4 control-label required">
+                            name
+                        </label>
+                        <div class="col-sm-7">
+                                <input type="text" name="first_name" maxlength="255" class="form-control" required id="id_first_name">
+                                {% if field.errors %}
+                                    <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                                {% endif %}
+                        </div>
+                </div> 
+                {% include 'location.html'%}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label for="id_line1" class="col-sm-4 control-label required">
+                        Estate or building:
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="line1" maxlength="255" class="form-control" required id="id_line1">
+                        {% if field.errors %}
+                            <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                        {% endif %}
+                    </div>
+                </div>    
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label for="id_phone_number" class="col-sm-4 control-label required" >
+                        Phone number
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="phone_number" maxlength="128" class="form-control" placeholder="0712345678" required id="id_phone_number">
+                        {% if field.errors %}
+                            <span class="error-block"><i class="icon-exclamation-sign"></i>jiodjiojddniond</span>
+                        {% endif %}
+                        <span class='help-block'>
+                            In case we need to call you about your order
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    <label for="id_notes" class="col-sm-4 control-label">
+                        Instructions
+                    </label>
+                    <div class="col-sm-7">
+                        <textarea name="notes" cols="40" rows="10" class="form-control" id="id_notes">
+                        </textarea>
+                        {% if field.errors %}
+                            <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                        {% endif %}
+                    <span class='help-block'>
+                            Tell us anything we should know when delivering your order.Including a message or a note
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-lg btn-primary" data-loading-text="Continuing..." {% if addresses %}{%else%}onclick="submittotalForm(){% endif%}">Continue</button>
+                        or"<a href="/basket/">return to basket</a>
+                        <hr/>
+                        <p style="color:blue;"><u>Risk whatever it takes to achieve your dream</u></p>
+                    </div>
+                </div>
+            </form>
+    {% endblock %}
+{% endif %}

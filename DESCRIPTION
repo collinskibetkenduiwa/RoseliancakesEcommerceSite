@@ -1,0 +1,11 @@
+E-commerce platform for selling cakes world wide will support multi vendor and multiple payment methods
+Since online shopping becomes more and more popular this days, more businesses 
+start to shift their products offers and transactions to the web. As experienced Python 
+programmers we recommend use Django frameworks for online stores development.For us we preffer using oscar for our platform
+Oscar is  a Django/Python framework designed to build domain-driven websites with non-trivial
+business logic. Oscar offers comprehensive user interface and has wide range of working models
+built on the basis of experience from both large and small e-commerce projects. One of 
+the biggest advantages of Oscar is its extendible core. Any part of framework’s functionality
+can be customized and extended, any class can be overridden or replaced. This feature allows 
+Oscar to handle any business requirements and solve complex e-commerce issues quickly and 
+efficiently.

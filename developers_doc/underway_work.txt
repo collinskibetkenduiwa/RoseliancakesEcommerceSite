@@ -1,0 +1,72 @@
+# Odered by level of importance
+# ####################very important########################
+Home page
+Mobile version templates #will be used to generate mobile app
+Contact us
+Captcha on all forms
+checkout one page
+Product in cart cannot be added twice 
+Automatic tax
+Logo to home
+payment
+On click cake categories to remain expanded
+# ############average important#############################
+Quick view to show ratings,add to cart and add to wish list
+Poptin
+webmaster codes
+
+# ################Not vey important########################
+configure sorl
+easy rec system automated fullfillment system
+messages modal
+cake building page
+charts
+self help ,forum 
+picture zoom 
+share to social media
+Otp
+feedback
+all auth 
+Agent pages
+erors to show in login  modal
+Email 
+Mobile messages
+Error pages
+Seo-sitemaps ,schema and robotics
+
+# ###############Not even important ########################
+cache
+Upc
+clean html
+claen css
+Bakers info
+receipt
+specification-how long it takes to cook and deriver
+In house apps
+Good motivation in receipt and footer
+Graphite
+self help
+forumn
+test cache
+acceleration
+Maintainance mode
+carrers
+mobile admin
+related business eg party organizers
+Share to social media
+backup
+register modal 
+Add apps directly
+Newsletter customization
+Installed apps customization
+Sending apps to pypu 
+Folk all used apps
+Smuggler
+load time
+Logo in the middle of navbar
+
+# #########################Not important###################
+Oscar wagtail
+Oscar accounts
+Credit card payment
+Oscar invoices

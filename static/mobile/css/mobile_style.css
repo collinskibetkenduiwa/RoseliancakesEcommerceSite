@@ -1,0 +1,104 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+a {
+  text-decoration: none;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+a:hover {
+  outline: none;
+  text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #4B3049;
+  font-family: "Poppins", sans-serif;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+p {
+  font-family: "Rubik", sans-serif;
+  line-height: 2;
+  font-size: 15px;
+  margin-bottom: 0px;
+  color: #795376;
+  font-weight: 400;
+}
+h5 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+img {
+  max-width: 100%;
+}
+a:focus, .button:focus, button:focus, .btn:focus {
+  text-decoration: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.navbar-collapse {
+  z-index: 9999 !important;
+  position: absolute;
+  left: 0;
+  top: 70px;
+  width:60%;
+  background-color: #fff;
+  /* text-align: center !important; */
+  right: 0;
+  z-index: 9998;
+  border: 0;
+  background:rgb(209, 186, 186);
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.4s;
+  outline: none !important;
+  line-height: 1;
+  cursor: pointer;
+  text-align:left;
+
+}
+.navbar-light li{
+  margin-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 5px;
+  width: auto;
+  height:auto;
+}
+.navbar-light .navbar-toggler {
+  border-color: transparent;
+  position: absolute;
+}
+
+.menu_icon i {
+  color:red;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 14px;
+}
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.5;
+}
+
+.main-nav, .main-nav * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+

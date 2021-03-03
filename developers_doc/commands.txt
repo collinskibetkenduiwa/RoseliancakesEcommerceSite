@@ -1,0 +1,9 @@
+# load up the local requirements file
+$ python manage.py refresh_packages --local
+# load up the local requirements file, and check PyPI
+$ python manage.py refresh_packages --local --remote
+If you want to clean out the existing PackageVersion table before loading the local file, use the --clean option:
+
+# clear out database, load up the local requirements file, and check PyPI
+$ python manage.py refresh_packages --clean --local --remote
+Tests

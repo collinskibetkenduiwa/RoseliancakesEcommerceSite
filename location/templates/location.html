@@ -1,0 +1,93 @@
+{% load address_tags %}
+{% load basket_tags %}
+{% load static %}
+<!DOCTYPE html>
+<script src="{%static 'core/js/jquery.min.js'%}"></script>
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+    <label for="id_phone_number" class="col-sm-4 col-xs-12 control-label required" >
+        Location
+    </label>
+    <div class="col-sm-7 col-xs-12">
+        <div class="col-sm-4 col-xs-5"> 
+            <select id="county" name="county" style="height:25px;width:105px;">
+                <option value>County</option>
+                {% county as county %}
+                {% for item in county %}
+                <option value="{{item.Name}}">{{item.Name}}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+        <div class="col-sm-3 col-xs-5">
+            <select id="town" name="line4" disabled="disabled " style="height:27px;" onchange="shipping_cost()" required>
+                <option class="lablel" value>Town</option>
+                {% towns as towns %}
+                {% for items in towns %}
+                <option rel="{{items.County}}" value="{{items.County}}-{{items.Name}}">{{items.Name}}</option>
+                {% comment %} <div style="display:none;"> {% endcomment %}
+                    {% comment %} <input type="hidden" id="{{items.County}}-{{items.Name}}" value="{{items.Price}}"> {% endcomment %}
+                {% comment %} </div> {% endcomment %}
+                {% endfor %}
+            </select>
+        </div> 
+        <hr/>
+        <span class='help-block'>
+            Will be used to calculate shipping price
+        </span>
+    </div>
+</div>
+<div id="snackbar">Shipping cost has changed</div>
+{% comment %} we use this to load pricing data which we will pick using javascript {% endcomment %}
+{% for items in towns %}
+<div style="visibility:hidden;">
+    <input type="hidden" id="{{items.County}}-{{items.Name}}" value="{{items.Price}}">
+</div>
+{% endfor %}
+<script>
+$(function(){
+    
+    var $cat = $("#county"),
+        $subcat = $("#town");
+    
+    $cat.on("change",function(){
+        var _rel = $(this).val();
+        $subcat.find("option").attr("style","");
+        $subcat.val("");
+        if(!_rel) return $subcat.prop("disabled",true);
+        $subcat.find("[rel="+_rel+"]").show();
+        $subcat.prop("disabled",false);
+    });
+    
+});
+function shipping_cost(){
+    var item = document.getElementById("town")
+    var town= item.value
+    var pricing = document.getElementById(town);
+    var price = pricing.value
+    var cart_price  = {{ request.basket.total_incl_tax }}
+    console.log(cart_price)
+    console.log(price)
+    var price = parseInt(price)
+    console.log(price)
+    var total = cart_price + price
+    console.log(total)
+    document.getElementById("shipping_cost").innerHTML=price
+    document.getElementById("total_cost").innerHTML=total
+    localStorage.setItem("cart_total",price)
+    localStorage.setItem("total_price",total)
+    var x = document.getElementById("snackbar")
+    // Add the "show" class to DIV
+    x.className = "show";
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 30000);
+}
+
+</script>
+<style>
+#town option{
+    display:none;
+}
+#town option.label{
+    display:block;
+}
+</style>
